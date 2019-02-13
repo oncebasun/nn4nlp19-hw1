@@ -104,5 +104,6 @@ venv.bak/
 .mypy_cache/
 
 # My
+*.DS_Store
 saved_models/
 test_results/
