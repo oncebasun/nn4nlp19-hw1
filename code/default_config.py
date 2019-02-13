@@ -2,8 +2,10 @@
 def get_default_config():
     args = lambda: None
 
-    # Initial learning rate
-    args.lr = 0.1
     # Data path
     args.datadir = '../data'
+    # Initial learning rate
+    args.lr = 0.1
+    # Store model of the best epoch
+    args.best = False
     return args

@@ -23,6 +23,7 @@ def make_out_paths(args):
         if not os.path.exists(args.logdir):
             os.makedirs(args.logdir)
 
+
 def get_logger(args):
     logger = logging.getLogger()
     fh = logging.FileHandler(os.path.join(args.logdir, 'main.log'))
@@ -41,4 +42,3 @@ def get_logger(args):
     logger.addHandler(fh)
     logger.addHandler(ch)
     return logger
-    
