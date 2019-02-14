@@ -56,6 +56,7 @@ if __name__ == '__main__':
     parser.add_argument('--test', action='store_true', default=False, help='train | test')
     parser.add_argument('--load', type=str, default=None, help='dir of model to load [default: None]')
     parser.add_argument('--debug', action='store_true', default=False, help='show DEBUG outputs')
+    parser.add_argument('--verbose', action='store_true', default=False, help='show more detailed output')
     # device
     parser.add_argument('--device', type=str, default='cpu', help='device to use for iterate data. cpu | cudaX (e.g. cuda0) [default: cpu]')
     # data
@@ -198,11 +199,13 @@ if __name__ == '__main__':
                  text_field, label_field,
                  args.epochs, args.clip,
                  cuda=args.cuda, best=args.best,
-                 model_dir=args.modeldir, log_dir=args.logdir)
+                 model_dir=args.modeldir, log_dir=args.logdir, 
+                 verbose=args.verbose)
 
     ###############################################
     ##                 Predict                   ##
     ###############################################
     load_model(args.modeldir, cnn)
-    predict(cnn, test_iter, text_field, label_field, args.predout, cuda=args.cuda, verbose=True)
+    predict(cnn, test_iter, text_field, label_field, args.predout, 
+            cuda=args.cuda, verbose=args.verbose)
     

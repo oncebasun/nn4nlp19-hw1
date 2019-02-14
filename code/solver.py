@@ -35,7 +35,9 @@ class Solver(object):
         self.val_acc_history = []
 
     #@profile
-    def train(self, cnn, train_iter, val_iter, text_field, label_field, num_epochs=10, clip=0.5, cuda=False, best=True, model_dir='../model/', log_dir='./logs'):
+    def train(self, cnn, train_iter, val_iter, text_field, label_field, 
+              num_epochs=10, clip=0.5, cuda=False, best=True, 
+              model_dir='../model/', log_dir='./logs', verbose=False):
         # Zero gradients of both optimizers
         optim = self.optim(cnn.parameters(), **self.optim_args)
 
@@ -59,6 +61,7 @@ class Solver(object):
 
         ss = 0
         for epoch in range(num_epochs):
+            self.logger.info('Epoch: %d start ...' % (epoch + 1))
             cnn.train()
             for batch in train_iter:
                 ss += 1
@@ -90,9 +93,10 @@ class Solver(object):
                 for tag, value in info.items():
                     self.tf_logger.scalar_summary(tag, value, ss)
                 '''
-                self.logger.info('Epoch: %d, Iteration: %d, loss: %f' % (epoch + 1, ss, loss.item()))
+                if verbose:
+                    self.logger.info('Epoch: %d, Iteration: %d, loss: %f' % (epoch + 1, ss, loss.item()))
 
-            val_acc = test(cnn, val_iter, text_field, label_field, cuda=cuda, verbose=True)
+            val_acc = test(cnn, val_iter, text_field, label_field, cuda=cuda, verbose=verbose)
             '''
             info = {
                 'val_acc': val_acc

@@ -107,3 +107,4 @@ venv.bak/
 *.DS_Store
 saved_models/
 test_results/
+embeddings/

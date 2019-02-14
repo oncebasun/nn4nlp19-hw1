@@ -103,9 +103,9 @@ def predict(cnn, test_iter, text_field, label_field, output_file, cuda=False, ve
             input = input.cuda()
         scores = cnn(input, test=True)
 
-        ss += 1
         with codecs.open(output_file, 'w') as f:
             for i in range(input.size(0)):
+                ss += 1
                 if verbose:
                     logger.info('Test sample: ' + str(ss))
                     logger.info('Input:')
