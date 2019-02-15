@@ -16,4 +16,6 @@ def get_default_config():
     args.best = False
     # Fix the embeddings 
     args.static = False
+    # Use existing word embeddings
+    args.emb = None
     return args

@@ -61,7 +61,8 @@ if __name__ == '__main__':
     parser.add_argument('--device', type=str, default='cpu', help='device to use for iterate data. cpu | cudaX (e.g. cuda0) [default: cpu]')
     # data
     parser.add_argument('--datadir', '-d', type=str, help='path to the data directory [default: "%s"]' % args.datadir)
-    parser.add_argument('--incorp_val', action='store_true', help='incorporate validation data into vocabulary' )
+    parser.add_argument('--incorp_val', action='store_true', help='incorporate validation data into vocabulary')
+    parser.add_argument('--emb', type=str, help='use existing word embeddings [default: %s]' %str(args.emb))
     # model
     parser.add_argument('--seed', type=int, help='manual seed [default: random seed or from config file]')
     parser.add_argument('--alpha', type=float, help='alpha of leaky relu [default: %f]' %args.alpha)
@@ -184,7 +185,8 @@ if __name__ == '__main__':
     ###############################################
     cnn = CNN(args.vocab_size, args.embed_dim, args.label_num, 
               args.kernel_sizes, args.kernel_num, alpha=args.alpha, 
-              static=args.static, dropout=args.dropout, pad_idx=args.pad_idx)
+              static=args.static, dropout=args.dropout, pad_idx=args.pad_idx,
+              extern_emb=args.emb, text_field=text_field)
     if hasattr(args, 'load') and args.load is not None:
         load_model(args.load, cnn)
 

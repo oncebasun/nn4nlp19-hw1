@@ -1,3 +1,4 @@
+import codecs
 import numpy as np
 import torch
 import torch.nn as nn
@@ -6,8 +7,20 @@ from torch import optim
 import torch.nn.functional as F
 
 
+def load_external_embeddings(emb_layer, extern_emb, text_field):
+    with codecs.open(extern_emb) as f:
+        next(f)
+        for line in f:
+            l = line.split()
+            word = l[0].lower()
+            if word in text_field.vocab.stoi:
+                embed = torch.Tensor([float(x) for x in l[1:]])
+                idx = text_field.vocab.stoi[word]
+                emb_layer.weight[idx].data.copy_(embed)
+
+
 class CNN(nn.Module):
-    def __init__(self, embed_num, embed_dim, n_class, kernel_sizes, n_channel=100, alpha=0.2, dropout=0.5, static=False, pad_idx=1):
+    def __init__(self, embed_num, embed_dim, n_class, kernel_sizes, n_channel=100, alpha=0.2, dropout=0.5, static=False, pad_idx=1, extern_emb=None, text_field=None):
         super(CNN, self).__init__()
 
         self.embed_num = embed_num
@@ -20,6 +33,9 @@ class CNN(nn.Module):
         self.static = static
 
         self.embedding = nn.Embedding(self.embed_num, self.embed_dim, padding_idx=pad_idx)
+
+        if extern_emb is not None:
+            load_external_embeddings(self.embedding, extern_emb, text_field)
 
         self.convs1 = nn.ModuleList([nn.Conv2d(1, self.n_channel, (k, self.embed_dim), padding=(k-1, 0)) for k in self.kernel_sizes])
 

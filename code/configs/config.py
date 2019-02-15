@@ -10,3 +10,4 @@ def update_config(args):
     args.epochs = 1
     args.clip = 1.0
     args.alpha = 0.0
+    args.emb = None
