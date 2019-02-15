@@ -1,0 +1,99 @@
+%
+% File acl2018.tex
+%
+%% Based on the style files for ACL-2017, with some changes, which were, in turn,
+%% Based on the style files for ACL-2015, with some improvements
+%%  taken from the NAACL-2016 style
+%% Based on the style files for ACL-2014, which were, in turn,
+%% based on ACL-2013, ACL-2012, ACL-2011, ACL-2010, ACL-IJCNLP-2009,
+%% EACL-2009, IJCNLP-2008...
+%% Based on the style files for EACL 2006 by 
+%%e.agirre@ehu.es or Sergi.Balari@uab.es
+%% and that of ACL 08 by Joakim Nivre and Noah Smith
+
+\documentclass[11pt,letterpaper]{article}
+\usepackage[hyperref]{acl2018}
+\usepackage{CJKutf8}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage{amsthm}
+\usepackage{bbm}
+\usepackage{mathtools,amssymb}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{float}
+\usepackage{array}
+\usepackage{url}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+
+\aclfinalcopy % Uncomment this line for the final submission
+\def\aclpaperid{1279} %  Enter the acl Paper ID here
+
+\setlength\titlebox{4cm}
+% You can expand the titlebox if you need extra space
+% to show all the authors. Please do not make the titlebox
+% smaller than 5cm (the original size); we will check this
+% in the camera-ready version and ask you to change it back.
+
+\newcommand\BibTeX{B{\sc ib}\TeX}
+% TODO Delete Finally.
+\newcommand{\lzy}[1]{\textcolor{red}{\bf\small [#1 --note]}}
+\newcommand*{\affaddr}[1]{#1} % No op here. Customize it for different styles.
+\newcommand*{\affmark}[1][*]{\textsuperscript{#1}}
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\setcounter{footnote}{0}
+
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+
+\title{11-747 Assignment 1: Text Classifier}
+   
+\author{Huiming Jin \\ \texttt{huimingj@andrew.cmu.edu}}
+\date{}
+ 
+\usepackage{scrextend}
+\deffootnote[1.5em]{1.5em}{1em}{\thefootnotemark\space}
+\renewcommand*{\thefootnote}{\roman{footnote}}
+
+\begin{document}
+\maketitle 
+\begin{abstract}
+
+\end{abstract}
+
+\section{Introduction}
+
+
+\section{Methodology}
+
+\subsection{Heuristic Aligner}
+
+\subsection{IBM Model 1 Aligner}
+
+\subsection{HMM Aligner}
+
+\section{Optimization Strategies}
+
+\subsection{Alignment Threshold}
+
+\subsection{Alignment Prior}
+
+\subsection{Bidirectional Alignments}
+
+\section{Experiments}
+
+\section{Conclusion}
+
+\vspace{1em} 
+% include your own bib file like this:
+%\bibliographystyle{acl}
+%\bibliography{acl2018}
+%\bibliography{acl2018}
+\bibliographystyle{acl_natbib}
+ 
+\appendix
+
+\end{document}
