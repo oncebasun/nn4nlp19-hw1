@@ -1,0 +1,1 @@
+python ensemble_test.py -p ../test_results/2019_02_15_08_08_50__-data/,../test_results/2019_02_15_08_09_08__-data,../test_results/2019_02_15_08_09_25__-data,../test_results/2019_02_15_08_45_18__-data,../test_results/2019_02_15_09_16_43__-data

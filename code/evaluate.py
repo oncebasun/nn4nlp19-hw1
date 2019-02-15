@@ -97,15 +97,14 @@ def predict(cnn, test_iter, text_field, label_field, output_file, cuda=False, ve
     if cuda:
         cnn.cuda()
     ss = 0
-    for batch in test_iter:
-        input, target = batch.text, batch.label
-        # Setup data
-        input.data.t_()
-        if cuda:
-            input = input.cuda()
-        scores = cnn(input, test=True)
-
-        with codecs.open(output_file, 'w') as f:
+    with codecs.open(output_file, 'w') as f:
+        for batch in test_iter:
+            input, target = batch.text, batch.label
+            # Setup data
+            input.data.t_()
+            if cuda:
+                input = input.cuda()
+            scores = cnn(input, test=True)
             for i in range(input.size(0)):
                 ss += 1
                 predict_label = label_field.vocab.itos[np.argmax(scores[i].cpu().data.numpy()) + 1]
