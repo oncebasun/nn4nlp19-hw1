@@ -108,3 +108,9 @@ venv.bak/
 saved_models/
 test_results/
 embeddings/
+*.aux
+*.fdb_latexmk
+*.fls
+*.out
+*.synctex.gz
+
