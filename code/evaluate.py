@@ -58,6 +58,7 @@ def test(cnn, test_iter, text_field, label_field, method='acc', cuda=False, verb
     ins_test = globals()[method]
     all_acc = 0
     ss = 0
+    all_loss = 0
     for batch in test_iter:
         input, target = batch.text, batch.label
         criterion = nn.CrossEntropyLoss()
@@ -69,7 +70,7 @@ def test(cnn, test_iter, text_field, label_field, method='acc', cuda=False, verb
             criterion.cuda()
         scores = cnn(input, test=True)
         loss = criterion(scores, target)
-
+        all_loss += loss.item()
         for i in range(input.size(0)):
             ss += 1
             if verbose:
@@ -86,6 +87,7 @@ def test(cnn, test_iter, text_field, label_field, method='acc', cuda=False, verb
                 logger.info('')
             all_acc += acc
     logger.info('Average Acc = ' + str(all_acc / ss))
+    logger.info('Average eval loss = ' + str(all_loss / ss))
     return all_acc / ss
 
 

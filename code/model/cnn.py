@@ -55,7 +55,7 @@ class CNN(nn.Module):
                 
         x = [F.max_pool1d(i, i.size(2)).squeeze(2) for i in x]  # [(N, n_channel), ...]*len(kernel_sizes)
 
-        x = torch.cat(x, 1)
+        x = torch.cat(x, 1)  # (N, len(kernel_sizes)*n_channel)
 
         x = self.dropout(x)  # (N, len(kernel_sizes)*n_channel)
 

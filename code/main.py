@@ -7,6 +7,7 @@ import logging
 import datetime
 import argparse
 import importlib
+import numpy as np
 import torch
 import torchtext.data as data
 import default_config
@@ -131,11 +132,12 @@ if __name__ == '__main__':
 
     # Seeding
     if args.seed is None:
-        args.seed = random.randint(1, 100000)
-    random.seed(args.seed)
-    torch.manual_seed(args.seed)
-    if args.cuda:
-        torch.cuda.manual_seed_all(args.seed)
+        args.seed = random.randint(1, 100000000)
+    #np.random.seed(args.seed)
+    #random.seed(args.seed)
+    #torch.manual_seed(args.seed)
+    #if args.cuda:
+    #    torch.cuda.manual_seed_all(args.seed)
 
     # Show configurations
     logger.info('%Configuration%')
