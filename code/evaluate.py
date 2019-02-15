@@ -108,12 +108,12 @@ def predict(cnn, test_iter, text_field, label_field, output_file, cuda=False, ve
         with codecs.open(output_file, 'w') as f:
             for i in range(input.size(0)):
                 ss += 1
+                predict_label = label_field.vocab.itos[np.argmax(scores[i].cpu().data.numpy()) + 1]
                 if verbose:
                     logger.info('Test sample: ' + str(ss))
                     logger.info('Input:')
                     logger.info(' '.join([text_field.vocab.itos[id.item()] if text_field.vocab.itos[id.item()]!='<pad>' else '' for id in input[i]]))
                     logger.info('Output:')
-                    predict_label = label_field.vocab.itos[np.argmax(scores[i].cpu().data.numpy()) + 1]
-                    f.write(predict_label + '\n')
                     logger.info(predict_label)
                     logger.info('')
+                f.write(predict_label + '\n')

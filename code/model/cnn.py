@@ -27,7 +27,10 @@ class CNN(nn.Module):
         self.embed_dim = embed_dim
         self.n_channel = n_channel
         self.n_class = n_class
-        self.kernel_sizes = [int(k) for k in kernel_sizes.split(',')]
+        if isinstance(kernel_sizes, str):
+            self.kernel_sizes = [int(k) for k in kernel_sizes.split(',')]
+        else:
+            self.kernel_sizes = kernel_sizes
         self.alpha = alpha
         self.dropout = dropout
         self.static = static

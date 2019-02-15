@@ -17,6 +17,7 @@ import datasets
 from model.cnn import CNN
 from solver import Solver
 from evaluate import predict
+from evaluate import test
 
 # TODO: design config setting system in a better way
 MODEL_CONFIGS = ['seed', 'alpha', 'dropout', 'embed_dim', 'kernel_num', 
@@ -32,7 +33,7 @@ def save_model_conf(model_dir, conf):
     with open(os.path.join(model_dir, 'conf.txt'), 'w') as f:
         for key in MODEL_CONFIGS:
             if hasattr(conf, key):
-                f.write('args.%s = %s' %(key, getattr(conf, key)))
+                f.write('args.%s = %s\n' %(key, getattr(conf, key)))
 
 def load_model(model_dir, cnn):
     cnn.load_state_dict(torch.load(os.path.join(model_dir, 'cnn.pkl')))
@@ -145,8 +146,9 @@ if __name__ == '__main__':
         logger.info('  %s: %s' %(key, str(args.__dict__[key])))
 
     # Save model configs
-    logger.info('Saving configs ... ')
-    save_model_conf(args.modeldir, args)
+    if not args.test:
+        logger.info('Saving configs ... ')
+        save_model_conf(args.modeldir, args)
 
     # Load dataset
     text_field = data.Field(lower=True)
@@ -164,16 +166,15 @@ if __name__ == '__main__':
         test_data = datasets.DB(args.datadir, text_field, label_field, args.label_num, sect='test')
         pickle.dump(text_field.vocab, open(os.path.join(args.modeldir, 'text_field.vocab'), 'wb'))
         pickle.dump(label_field.vocab, open(os.path.join(args.modeldir, 'label_field.vocab'), 'wb'))
-        train_iter, val_iter = data.BucketIterator.splits(
-                                (train_data, val_data),
-                                batch_sizes=(args.batchsize, args.batchsize),
-                                device = -1 if not args.cuda else None, 
-                                repeat=False, shuffle=args.shuffle)
+        train_iter = data.BucketIterator(train_data, batch_size=args.batchsize, device = -1 if not args.cuda else None, repeat=False, shuffle=args.shuffle)
+        val_iter = data.BucketIterator(val_data, batch_size=args.batchsize, device = -1 if not args.cuda else None, repeat=False, shuffle=False, sort=False)
         test_iter = data.BucketIterator(test_data, batch_size=args.batchsize, device = -1 if not args.cuda else None, repeat=False, shuffle=False, sort=False)
     else:
-        text_field.vocab = pickle.load(open(os.path.join(args.modeldir, 'text_field.vocab'), 'rb'))
-        label_field.vocab = pickle.load(open(os.path.join(args.modeldir, 'label_field.vocab'), 'rb'))
+        text_field.vocab = pickle.load(open(os.path.join(args.load, 'text_field.vocab'), 'rb'))
+        label_field.vocab = pickle.load(open(os.path.join(args.load, 'label_field.vocab'), 'rb'))
         test_data = datasets.DB(args.datadir, text_field, label_field, args.label_num, sect='test')
+        val_data = datasets.DB(args.datadir, text_field, label_field, args.label_num, sect='val')
+        val_iter = data.BucketIterator(val_data, batch_size=args.batchsize, device = -1 if not args.cuda else None, repeat=False, shuffle=False, sort=False)
         test_iter = data.BucketIterator(test_data, batch_size=args.batchsize, device = -1 if not args.cuda else None, repeat=False, shuffle=False, sort=False)
     logger.info('Text vocab size: %d' %len(text_field.vocab.itos))
     logger.info('Label vocab size: %d' %len(label_field.vocab.itos))
@@ -209,7 +210,16 @@ if __name__ == '__main__':
     ###############################################
     ##                 Predict                   ##
     ###############################################
-    load_model(args.modeldir, cnn)
-    predict(cnn, test_iter, text_field, label_field, args.predout, 
-            cuda=args.cuda, verbose=args.verbose)
+    if not args.test:
+        load_model(args.modeldir, cnn)
+    else:
+        logger.info('Testing on val set:')
+        val_acc = test(cnn, val_iter, text_field, label_field, cuda=args.cuda, verbose=args.verbose)
+    predict(cnn, val_iter, text_field, label_field, 
+            os.path.join(args.predout, 'predict_val.txt'), cuda=args.cuda, 
+            verbose=args.verbose)
+    predict(cnn, test_iter, text_field, label_field, 
+            os.path.join(args.predout, 'predict_test.txt'), cuda=args.cuda, 
+            verbose=args.verbose)
     
+        

@@ -15,7 +15,7 @@ def make_out_paths(args):
         args.logdir = os.path.join(args.modeldir, 'logs/')
         if not os.path.exists(args.logdir):
             os.makedirs(args.logdir)
-        args.predout = os.path.join(args.modeldir, 'predict.txt')
+        args.predout = args.modeldir
     else:
         args.testdir = os.path.join('../test_results/', timestamp + data_ciph)
         if not os.path.exists(args.testdir):
@@ -23,6 +23,7 @@ def make_out_paths(args):
         args.logdir = os.path.join(args.testdir, 'logs/')
         if not os.path.exists(args.logdir):
             os.makedirs(args.logdir)
+        args.predout = args.testdir
 
 
 def get_logger(args):
