@@ -61,12 +61,42 @@
 \begin{document}
 \maketitle 
 \begin{abstract}
-
+    In this assignment, we implement multi-class text classifiers from scratch. 
+    Besides the most basic CNN model, various deep neural architectures are 
+    tried, as well as several machine learning strategies for better 
+    performance. With acceptable time and memory spending, the best model 
+    achieves 86.6\% accuracy on the given validation set. We also conduct a 
+    series of experiments to analyze our models.
 \end{abstract}
 
 \section{Introduction}
+    For this assignment, we are given simply pre-processed multi-class text
+    classification task data. Each instance in the data is a sentence along with
+    a single label that indicates the topic of sentence.
 
+    \begin{table}[htbp]
+        \centering
+        \small
+        %\resizebox{\linewidth}{!}{
+        \begin{tabular}{cp{4.3cm}}
+            \toprule
+                {\bf Label} & {\bf Sentence} \\
+            \midrule
+                Music       & The song was written by Madonna and produced by Benitez . \\
+            \midrule
+                Video games & The developers of the game added round metal shoulders on Samus \' Varia Suit to differentiate it from her Power Suit , since both looked similar on the Game Boy \'s limited greyscale display . \\
+            \midrule
+                Sports and recreation & The series went to seven games . \\
+            \bottomrule
+        \end{tabular}
+        %}
+        \caption{\label{tab:data-example} Some data examples.}
+    \end{table}
 
+    In the submission of this assignment, the predicted labels for the
+    validation set and the test set are listed in \texttt{predict_val.txt} and 
+    \texttt{predict_test.txt} respectively. 
+    
 \section{Methodology}
 
 \subsection{Heuristic Aligner}

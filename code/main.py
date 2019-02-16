@@ -14,7 +14,7 @@ import default_config
 import configs.config as configuration
 import utils
 import datasets
-from model.cnn import CNN
+from model.cnn2 import CNN
 from solver import Solver
 from evaluate import predict
 from evaluate import test
@@ -202,7 +202,7 @@ if __name__ == '__main__':
         solver.train(cnn,
                  train_iter, val_iter,
                  text_field, label_field,
-                 args.epochs, args.clip,
+                 args.epochs, args.clip, reg_lambda=args.reg_lambda,
                  cuda=args.cuda, best=args.best,
                  model_dir=args.modeldir, log_dir=args.logdir, 
                  verbose=args.verbose)

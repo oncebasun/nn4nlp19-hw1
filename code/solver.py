@@ -36,7 +36,7 @@ class Solver(object):
 
     #@profile
     def train(self, cnn, train_iter, val_iter, text_field, label_field, 
-              num_epochs=10, clip=0.5, cuda=False, best=True, 
+              num_epochs=10, clip=0.5, reg_lambda=0.0, cuda=False, best=True, 
               model_dir='../model/', log_dir='./logs', verbose=False):
         # Zero gradients of both optimizers
         optim = self.optim(cnn.parameters(), **self.optim_args)
@@ -80,7 +80,14 @@ class Solver(object):
                 # Run words through cnn
                 scores = cnn(input)
 
-                loss = criterion(scores, target)
+                l2_reg = None
+                for W in cnn.parameters():
+                    if l2_reg is None:
+                        l2_reg = W.norm(2)
+                    else:
+                        l2_reg = l2_reg + W.norm(2)
+
+                loss = criterion(scores, target) + l2_reg * reg_lambda
 
                 # Backpropagation
                 loss.backward()
