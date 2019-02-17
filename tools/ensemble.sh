@@ -1,1 +1,3 @@
-python ensemble_test.py -p ../test_results/2019_02_15_08_08_50__-data/,../test_results/2019_02_15_08_09_08__-data,../test_results/2019_02_15_08_09_25__-data,../test_results/2019_02_15_08_45_18__-data,../test_results/2019_02_15_09_16_43__-data,../test_results/2019_02_15_13_49_42__-data
+python ensemble_test.py -p ../test_results/DPCNN-1-L0.01/2019_02_16_19_30_17__-data/,../test_results/DPCNN-2-L0.0001/2019_02_16_19_30_54__-data/,../test_results/DPCNN-3-L0.1/2019_02_16_19_32_01__-data/,../test_results/TextCNN-100-L0.01/2019_02_16_19_19_23__-data/,../test_results/TextCNN-200-L0.001/2019_02_16_19_23_45__-data/,../test_results/TextCNN-300-L0.0001/2019_02_16_19_27_33__-data/
+
+#../test_results/TextCNN-200-L0.001/2019_02_16_19_24_43__-data/ 0.874

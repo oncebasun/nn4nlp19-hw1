@@ -7,8 +7,6 @@ import argparse
 import torchtext.data as data
 
 
-#TODO:
-
 def test(label_out, label_trg):
     assert len(label_out) == len(label_trg)
     acc = 0
@@ -73,6 +71,27 @@ if __name__ == '__main__':
         max_key = max(cnt, key=lambda k: cnt[k])
         val_ensemble_out.append(max_key)
 
+    test_ensemble_out = []
+    test_num = len(test_labels_outs[-1])
+    for j in range(test_num):
+        cnt = {}
+        for i in range(len(test_labels_outs)):
+            if test_labels_outs[i][j] not in cnt:
+                cnt[test_labels_outs[i][j]] = 0
+            cnt[test_labels_outs[i][j]] += model_acc[i]
+        max_key = max(cnt, key=lambda k: cnt[k])
+        test_ensemble_out.append(max_key)
+
     print("Ensemble val: %f" %test(val_ensemble_out, val_labels_trg))
+
+    with codecs.open(os.path.join(output_path, 'predict_val.txt'), 'w') as f:
+        for label in val_ensemble_out:
+            f.write(label + '\n')
+
+    with codecs.open(os.path.join(output_path, 'predict_test.txt'), 'w') as f:
+        for label in test_ensemble_out:
+            f.write(label + '\n')
+
+    
         
 
