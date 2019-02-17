@@ -122,11 +122,11 @@ class CNN(nn.Module):
 
         x = x + self.convs2(x)  # (N, C, len/2)
 
-        #length = x.size(2)  
-        #x = F.pad(x, (0, length%2), "constant", 0)  # (N, C, len/2)
-        #x = self.pool2(x)  # (N, C, len/4)
+        length = x.size(2)  
+        x = F.pad(x, (0, length%2), "constant", 0)  # (N, C, len/2)
+        x = self.pool2(x)  # (N, C, len/4)
 
-        #x = x + self.convs3(x)  # (N, C, len/4)
+        x = x + self.convs3(x)  # (N, C, len/4)
 
         #length = x.size(2)  
         #x = F.pad(x, (0, length%2), "constant", 0)  # (N, C, len/4)

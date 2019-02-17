@@ -3,8 +3,8 @@ def update_config(args):
     args.label_num = 16
     args.batchsize = 512
     args.embed_dim = 300
-    args.kernel_sizes = "3"
-    args.kernel_num = 256
+    args.kernel_sizes = "3,4,5"
+    args.kernel_num = 300
     args.static = False
     args.dropout = 0.5
     args.epochs = 20
